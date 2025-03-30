@@ -34,10 +34,8 @@ namespace Demo1
         {
             if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
             {
-                // Получаем новое значение
                 object newValue = editpartnersDataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
 
-                // Добавляем в список измененных ячеек
                 changedCells.Add((e.RowIndex, e.ColumnIndex, newValue));
             }
         }
@@ -56,7 +54,6 @@ namespace Demo1
                     int partnerId = Convert.ToInt32(editpartnersDataGridView.Rows[rowIndex].Cells["partner_id"].Value);
                     string columnName = editpartnersDataGridView.Columns[columnIndex].Name;
 
-                    // Обновляем данные в базе
                     var command = new NpgsqlCommand($"UPDATE master_floor.partner SET {columnName} = @newValue WHERE partner_id = @partner_id", connection);
                     command.Parameters.AddWithValue("newValue", newValue);
                     command.Parameters.AddWithValue("partner_id", partnerId);
@@ -65,7 +62,7 @@ namespace Demo1
             }
 
             MessageBox.Show("Все изменения успешно сохранены.");
-            changedCells.Clear(); // Очищаем список после сохранения
+            changedCells.Clear();
         }
 
 
